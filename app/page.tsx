@@ -1,113 +1,363 @@
-import Image from 'next/image'
+import Button from "@/components/button";
+import Image from "next/image";
 
-export default function Home() {
+export default async function Home() {
   return (
-    <main className="flex min-h-screen flex-col items-center justify-between p-24">
-      <div className="z-10 max-w-5xl w-full items-center justify-between font-mono text-sm lg:flex">
-        <p className="fixed left-0 top-0 flex w-full justify-center border-b border-gray-300 bg-gradient-to-b from-zinc-200 pb-6 pt-8 backdrop-blur-2xl dark:border-neutral-800 dark:bg-zinc-800/30 dark:from-inherit lg:static lg:w-auto  lg:rounded-xl lg:border lg:bg-gray-200 lg:p-4 lg:dark:bg-zinc-800/30">
-          Get started by editing&nbsp;
-          <code className="font-mono font-bold">app/page.tsx</code>
-        </p>
-        <div className="fixed bottom-0 left-0 flex h-48 w-full items-end justify-center bg-gradient-to-t from-white via-white dark:from-black dark:via-black lg:static lg:h-auto lg:w-auto lg:bg-none">
-          <a
-            className="pointer-events-none flex place-items-center gap-2 p-8 lg:pointer-events-auto lg:p-0"
-            href="https://vercel.com?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
+    <main className="flex min-h-screen flex-col items-center justify-around p-24">
+      <div>
+        <h2 className="py-2">Cache control</h2>
+        <div className="flex space-x-4 my-2">
+          <Button
+            url="/api/cache-control/bypass-client-cache/true"
+            hover={
+              <div className="text-left bg-cyan-800 py-1 px-5">
+                <p className="my-1">
+                  Determines whether our CDN will instruct the client to bypass
+                  cache.
+                </p>
+                <ul className="list-disc">
+                  <li>
+                    Bypass the cache: Sets the{" "}
+                    <code className="bg-cyan-900">cache-control</code> response
+                    header to:{" "}
+                    <code className="bg-cyan-900">
+                      cache-control: private, no-cache, no-store,
+                      must-revalidate
+                    </code>
+                  </li>
+                </ul>
+                <p className="italic">
+                  An alternative method for defining a client&apos;s caching
+                  policy is to set the cache-control response header through the
+                  Set Response Headers feature.
+                </p>
+                Default Behavior: <code className="bg-cyan-900">false</code>
+              </div>
+            }
           >
-            By{' '}
-            <Image
-              src="/vercel.svg"
-              alt="Vercel Logo"
-              className="dark:invert"
-              width={100}
-              height={24}
-              priority
-            />
-          </a>
+            Bypass Client Cache
+          </Button>
+          <Button
+            url="/api/cache-control/bypass-client-cache/false"
+            hover={
+              <div className="text-left bg-cyan-800 py-1 px-5">
+                <p className="my-1">
+                  Determines whether our CDN will instruct the client to bypass
+                  cache.
+                </p>
+                <ul className="list-disc">
+                  <li>Do not bypass the cache: No effect.</li>
+                </ul>
+                <p className="italic">
+                  An alternative method for defining a client&apos;s caching
+                  policy is to set the cache-control response header through the
+                  Set Response Headers feature.
+                </p>
+                Default Behavior: <code className="bg-cyan-900">false</code>
+              </div>
+            }
+          >
+            Do Not Bypass Client Cache
+          </Button>
+        </div>
+        <div className="flex space-x-4 my-2">
+          <Button
+            url="/api/cache-control/treatment/pass"
+            hover={
+              <div className="text-left bg-cyan-800 py-1 px-5">
+                <p className="my-1">
+                  Cache Control Header Treatment Controls the generation of
+                  Cache-Control headers by an edge server when the Set Client
+                  Max Age feature is active.
+                </p>
+                <p className="my-1 italic">
+                  The recommended method for setting up this feature is to add
+                  both Set Client Max Age and Cache Control Header Treatment
+                  features within the same rule.
+                </p>
+                <p>
+                  <strong>Pass</strong>: Ensures that the following actions will
+                  take place:
+                  <ul className="list-disc ml-5">
+                    <li>
+                      Ensures that the Cache-Control header produced by the Set
+                      Client Max Age feature is never added to the response.
+                    </li>
+                    <li>
+                      If the origin server produces a Cache-Control header, it
+                      will pass through to the user.
+                    </li>
+                  </ul>
+                </p>
+              </div>
+            }
+          >
+            Cache Control Header Treatment: Pass
+          </Button>
+          <Button
+            url="/api/cache-control/treatment/overwrite"
+            hover={
+              <div className="text-left bg-cyan-800 py-1 px-5">
+                <p className="my-1">
+                  Cache Control Header Treatment Controls the generation of
+                  Cache-Control headers by an edge server when the Set Client
+                  Max Age feature is active.
+                </p>
+                <p className="my-1 italic">
+                  The recommended method for setting up this feature is to add
+                  both Set Client Max Age and Cache Control Header Treatment
+                  features within the same rule.
+                </p>
+                <p>
+                  <strong>Overwrite</strong>: Ensures that the following actions
+                  will take place:
+                  <ul className="list-disc ml-5">
+                    <li>
+                      Overwrites the Cache-Control header generated by the
+                      origin server.
+                    </li>
+                    <li>
+                      Adds the Cache-Control header produced by the Set Client
+                      Max Age feature to the response.
+                    </li>
+                  </ul>
+                </p>
+              </div>
+            }
+          >
+            Cache Control Header Treatment: Overwrite
+          </Button>
+          <Button
+            url="/api/cache-control/treatment/if_missing-true"
+            hover={
+              <div className="text-left bg-cyan-800 py-1 px-5">
+                <p className="my-1">
+                  Cache Control Header Treatment Controls the generation of
+                  Cache-Control headers by an edge server when the Set Client
+                  Max Age feature is active.
+                </p>
+                <p className="my-1 italic">
+                  The recommended method for setting up this feature is to add
+                  both Set Client Max Age and Cache Control Header Treatment
+                  features within the same rule.
+                </p>
+                <p>
+                  <strong>If missing</strong>: If a Cache-Control header was not
+                  received from the origin server, then this option adds the
+                  Cache-Control header produced by the Set Client Max Age
+                  feature. This option is useful for ensuring that all assets
+                  will be assigned a Cache-Control header.
+                </p>
+              </div>
+            }
+          >
+            Cache Control Header Treatment: If missing, not missing
+          </Button>
+          <Button
+            url="/api/cache-control/treatment/if_missing-false"
+            hover={
+              <div className="text-left bg-cyan-800 py-1 px-5">
+                <p className="my-1">
+                  Cache Control Header Treatment Controls the generation of
+                  Cache-Control headers by an edge server when the Set Client
+                  Max Age feature is active.
+                </p>
+                <p className="my-1 italic">
+                  The recommended method for setting up this feature is to add
+                  both Set Client Max Age and Cache Control Header Treatment
+                  features within the same rule.
+                </p>
+                <p>
+                  <strong>If missing</strong>: If a Cache-Control header was not
+                  received from the origin server, then this option adds the
+                  Cache-Control header produced by the Set Client Max Age
+                  feature. This option is useful for ensuring that all assets
+                  will be assigned a Cache-Control header.
+                </p>
+              </div>
+            }
+          >
+            Cache Control Header Treatment: If missing, missing
+          </Button>
+          <Button
+            url="/api/cache-control/treatment/remove"
+            hover={
+              <div className="text-left bg-cyan-800 py-1 px-5">
+                <p className="my-1">
+                  Cache Control Header Treatment Controls the generation of
+                  Cache-Control headers by an edge server when the Set Client
+                  Max Age feature is active.
+                </p>
+                <p className="my-1 italic">
+                  The recommended method for setting up this feature is to add
+                  both Set Client Max Age and Cache Control Header Treatment
+                  features within the same rule.
+                </p>
+                <p>
+                  <strong>Remove</strong>: Excludes the Cache-Control header
+                  from the response. If a Cache-Control header has already been
+                  assigned, then it will be stripped from the response.
+                </p>
+              </div>
+            }
+          >
+            Cache Control Header Treatment: Remove
+          </Button>
+        </div>
+        <div className="flex space-x-4 my-2">
+          <Button
+            url="/api/cache-control/query-key/all?a=1&b=2"
+            hover={
+              <div className="text-left bg-cyan-800 py-1 px-5">
+                <p className="my-1">
+                  Determines whether the cache key will include or exclude query
+                  string parameters associated with a request.
+                </p>
+
+                <p className="my-1">
+                  Include or exclude all query string parameters through the
+                  <code className="bg-cyan-900">Include All</code> or{" "}
+                  <code className="bg-cyan-900">Exclude All</code> modes.
+                </p>
+                <p className="my-1">
+                  Alternatively, include or exclude specific query string
+                  parameters through the{" "}
+                  <code className="bg-cyan-900">Include</code> or{" "}
+                  <code className="bg-cyan-900">Include All Except</code> modes.
+                </p>
+              </div>
+            }
+          >
+            Cache Key Query String: Include All, a, b
+          </Button>
+          <Button url="/api/cache-control/query-key/all?c=3&b=4">
+            Cache Key Query String: Include All, c, d
+          </Button>
+          <Button url="/api/cache-control/query-key/none?a=1&b=2">
+            Cache Key Query String: Exclude All, a, b
+          </Button>
+          <Button url="/api/cache-control/query-key/none?c=3&b=4">
+            Cache Key Query String: Exclude All, c d
+          </Button>
+          <Button url="/api/cache-control/query-key/only-p?a=1&b=2&p=3">
+            Cache Key Query String: Include, p, a, b
+          </Button>
+          <Button url="/api/cache-control/query-key/only-p?p=3">
+            Cache Key Query String: Include, p
+          </Button>
+          <Button url="/api/cache-control/query-key/only-p?p=3&c=5&d=8">
+            Cache Key Query String: Include, p, c, d
+          </Button>
+          <Button url="/api/cache-control/query-key/except-p?p=3&c=5&d=8">
+            Cache Key Query String: Include All Except
+          </Button>
+          <Button url="/api/cache-control/query-key/except-p?p=4&c=5&d=8">
+            Cache Key Query String: Include All Except
+          </Button>
+        </div>
+        <div className="flex space-x-4 my-2">
+          <Button
+            hover={
+              <div className="text-left bg-cyan-800 py-1 px-5">
+                By default, our CDN restricts caching to requests whose body is
+                smaller than 14 Kb. <br />I have not been able to find any other
+                information about this feature in docs
+              </div>
+            }
+          >
+            Cacheable Request Body Size: None
+          </Button>
+        </div>
+        <div className="flex space-x-4 my-2">
+          <Button
+            url="/api/cache-control/codes/default?code=200"
+            hover={
+              <div className="text-left bg-cyan-800 py-1 px-5">
+                <p className="my-1">
+                  Defines the set of status codes that can result in cached
+                  content.
+                </p>{" "}
+                <p className="my-1">
+                  Key information: Caching non-200 OK response also requires
+                  enabling the Ignore Origin No Cache feature. This feature
+                  cannot be used to disable caching for responses that generate
+                  a 200 OK status code. Default Behavior: By default, caching is
+                  restricted to responses that generate a 200 OK status code.
+                </p>
+              </div>
+            }
+          >
+            Cacheable Status Codes, default with 200
+          </Button>
+          <Button url="/api/cache-control/codes/default?code=500">
+            Cacheable Status Codes, default with 500
+          </Button>
+          <Button url="/api/cache-control/codes/non-default?code=200">
+            Cacheable Status Codes, non-default with 200
+          </Button>
+          <Button url="/api/cache-control/codes/non-default?code=500">
+            Cacheable Status Codes, non-default with 500
+          </Button>
+        </div>
+        <div className="flex space-x-4 my-2">
+          <Button
+            url="/api/cache-control/methods/default"
+            hover={
+              <div className="text-left bg-cyan-800 py-1 px-5">
+                Determines whether POST and PUT requests are eligible for
+                caching on our network.
+              </div>
+            }
+          >
+            Enable Caching for Methods, default GET
+          </Button>
+          <Button
+            url="/api/cache-control/methods/default"
+            method="POST"
+            hover={
+              <div className="text-left bg-cyan-800 py-1 px-5">
+                Determines whether POST and PUT requests are eligible for
+                caching on our network.
+              </div>
+            }
+          >
+            Enable Caching for Methods, default POST
+          </Button>
+          <Button
+            url="/api/cache-control/methods/non-default"
+            hover={
+              <div className="text-left bg-cyan-800 py-1 px-5">
+                Determines whether POST and PUT requests are eligible for
+                caching on our network.
+              </div>
+            }
+          >
+            Enable Caching for Methods, non-default GET
+          </Button>
+          <Button url="/api/cache-control/methods/non-default" method="POST">
+            Enable Caching for Methods, non-default POST
+          </Button>
         </div>
       </div>
 
-      <div className="relative flex place-items-center before:absolute before:h-[300px] before:w-[480px] before:-translate-x-1/2 before:rounded-full before:bg-gradient-radial before:from-white before:to-transparent before:blur-2xl before:content-[''] after:absolute after:-z-20 after:h-[180px] after:w-[240px] after:translate-x-1/3 after:bg-gradient-conic after:from-sky-200 after:via-blue-200 after:blur-2xl after:content-[''] before:dark:bg-gradient-to-br before:dark:from-transparent before:dark:to-blue-700 before:dark:opacity-10 after:dark:from-sky-900 after:dark:via-[#0141ff] after:dark:opacity-40 before:lg:h-[360px] z-[-1]">
-        <Image
-          className="relative dark:drop-shadow-[0_0_0.3rem_#ffffff70] dark:invert"
-          src="/next.svg"
-          alt="Next.js Logo"
-          width={180}
-          height={37}
-          priority
-        />
-      </div>
-
-      <div className="mb-32 grid text-center lg:max-w-5xl lg:w-full lg:mb-0 lg:grid-cols-4 lg:text-left">
-        <a
-          href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className={`mb-3 text-2xl font-semibold`}>
-            Docs{' '}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p className={`m-0 max-w-[30ch] text-sm opacity-50`}>
-            Find in-depth information about Next.js features and API.
-          </p>
-        </a>
-
-        <a
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className={`mb-3 text-2xl font-semibold`}>
-            Learn{' '}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p className={`m-0 max-w-[30ch] text-sm opacity-50`}>
-            Learn about Next.js in an interactive course with&nbsp;quizzes!
-          </p>
-        </a>
-
-        <a
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className={`mb-3 text-2xl font-semibold`}>
-            Templates{' '}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p className={`m-0 max-w-[30ch] text-sm opacity-50`}>
-            Explore the Next.js 13 playground.
-          </p>
-        </a>
-
-        <a
-          href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className={`mb-3 text-2xl font-semibold`}>
-            Deploy{' '}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p className={`m-0 max-w-[30ch] text-sm opacity-50`}>
-            Instantly deploy your Next.js site to a shareable URL with Vercel.
-          </p>
-        </a>
+      <div>
+        <h2 className="py-2">Origin</h2>
+        <div className="flex space-x-4">
+          <Button
+            url="/api/hello/1"
+            hover={
+              <div className="text-left bg-cyan-800 py-1 px-5">
+                Defines the maximum number of requests for a Keep-Alive
+                connection before it is closed. <br />
+                No idea how it can be demonstrated
+              </div>
+            }
+          >
+            Max Keep-Alive Requests
+          </Button>
+          <Button url="/api/origin">Set Origin</Button>
+        </div>
       </div>
     </main>
-  )
+  );
 }

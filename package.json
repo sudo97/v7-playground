@@ -1,13 +1,16 @@
 {
-  "name": "v7-playground",
-  "version": "0.1.0",
-  "private": true,
   "scripts": {
+    "edgio:dev": "edgio dev",
+    "edgio:build": "edgio build",
+    "edgio:deploy": "edgio deploy",
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
     "lint": "next lint"
   },
+  "name": "v7-playground",
+  "version": "0.1.0",
+  "private": true,
   "dependencies": {
     "@types/node": "20.5.7",
     "@types/react": "18.2.21",
@@ -21,5 +24,13 @@
     "react-dom": "18.2.0",
     "tailwindcss": "3.3.3",
     "typescript": "5.2.2"
+  },
+  "devDependencies": {
+    "@edgio/cli": "^7.2.2",
+    "@edgio/core": "^7.2.2",
+    "@edgio/devtools": "^7.2.2",
+    "@edgio/next": "^7.2.2",
+    "@edgio/prefetch": "^7.2.2",
+    "@edgio/react": "^7.2.2"
   }
 }
